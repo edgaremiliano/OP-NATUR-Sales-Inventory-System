@@ -377,6 +377,43 @@ export default function Dashboard() {
         </div>
       </div>
 
+      <div className="card p-6 mt-6">
+        <h3 className="text-lg text-beige-50 font-light mb-6 uppercase tracking-widest">Todos los productos vendidos ({selectedMonth})</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-chocolate-600 text-[10px] uppercase tracking-widest text-chocolate-400">
+                <th className="pb-3 px-4 font-medium">Producto</th>
+                <th className="pb-3 px-4 font-medium text-right">Cantidad</th>
+                <th className="pb-3 px-4 font-medium text-center">Método</th>
+                <th className="pb-3 px-4 font-medium text-right">Total Venta</th>
+                <th className="pb-3 px-4 font-medium text-right text-gold-400">Ganancia</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredSales.slice().reverse().map((sale, idx) => (
+                <tr key={idx} className="border-b border-chocolate-700/50 hover:bg-chocolate-800/50 transition-colors">
+                  <td className="py-3 px-4 font-medium text-beige-100">{sale.productName}</td>
+                  <td className="py-3 px-4 text-right text-beige-200">{sale.quantity}</td>
+                  <td className="py-3 px-4 text-center">
+                    <span className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded-full ${sale.method === 'CLIP' ? 'bg-chocolate-700 text-gold-400' : 'bg-green-900/30 text-green-400'}`}>
+                      {sale.method}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 text-right font-medium text-beige-50">${formatCurrency(sale.saleTotal)}</td>
+                  <td className="py-3 px-4 text-right font-medium text-gold-400">${formatCurrency(sale.saleTotal - sale.investment - sale.commission)}</td>
+                </tr>
+              ))}
+              {filteredSales.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="py-6 text-center text-chocolate-400">No hay ventas registradas en este mes.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <AddSaleModal 
         isOpen={isAddSaleOpen} 
         onClose={() => setIsAddSaleOpen(false)} 
