@@ -74,7 +74,12 @@ export default function Dashboard() {
   const totalSales = filteredSales.reduce((acc, sale) => acc + (sale.saleTotal || 0), 0);
   const totalInvestment = filteredSales.reduce((acc, sale) => acc + (sale.investment || 0), 0);
   const totalCommission = filteredSales.reduce((acc, sale) => acc + (sale.commission || 0), 0);
-  const totalProfit = totalSales - totalInvestment - totalCommission;
+  const totalGrossProfit = totalSales - totalInvestment - totalCommission;
+  
+  // Deduct fixed monthly expenses dynamically or standard fixed
+  const fixedExpenses = 549; // $549.00 fixed monthly cost
+  const totalNetProfit = totalGrossProfit - fixedExpenses;
+
   const unitsSold = filteredSales.reduce((acc, sale) => acc + (sale.quantity || 0), 0);
   const avgTicket = filteredSales.length > 0 ? totalSales / filteredSales.length : 0;
 
@@ -241,25 +246,25 @@ export default function Dashboard() {
           delay={0.1}
         />
         <StatCard 
-          title="Inversión" 
-          value={`$${formatCurrency(totalInvestment)}`} 
-          icon={<Package size={24} />} 
-          tooltip="Costo total de los productos vendidos"
+          title="Ganancia Bruta" 
+          value={`$${formatCurrency(totalGrossProfit)}`} 
+          icon={<Target size={24} />} 
+          tooltip="Ventas - Inversión - Comisiones"
           delay={0.2}
         />
         <StatCard 
-          title="Comisiones" 
-          value={`-$${formatCurrency(totalCommission)}`} 
-          icon={<CreditCard size={24} />} 
-          tooltip="Comisiones cobradas por terminales de pago"
+          title="Gastos Fijos" 
+          value={`-$${formatCurrency(fixedExpenses)}`} 
+          icon={<FileText size={24} />} 
+          tooltip="Gastos fijos mensuales aproximados"
           delay={0.3}
         />
         <StatCard 
           title="Ganancia Neta" 
-          value={`$${formatCurrency(totalProfit)}`} 
+          value={`$${formatCurrency(totalNetProfit)}`} 
           icon={<Landmark size={24} />} 
           trend={profitTrend}
-          tooltip="Ganancia real después de restar inversión y comisiones"
+          tooltip="Ganancia real después de restar inversión, comisiones y gastos fijos"
           delay={0.4}
         />
       </div>
