@@ -236,7 +236,7 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         <StatCard 
           title="Ventas Totales" 
           value={`$${formatCurrency(totalSales)}`} 
@@ -246,25 +246,32 @@ export default function Dashboard() {
           delay={0.1}
         />
         <StatCard 
+          title="Inversión" 
+          value={`$${formatCurrency(totalInvestment)}`} 
+          icon={<Package size={24} />} 
+          tooltip="Costo total de los productos vendidos"
+          delay={0.2}
+        />
+        <StatCard 
           title="Comisiones" 
           value={`-$${formatCurrency(totalCommission)}`} 
           icon={<CreditCard size={24} />} 
           tooltip="Comisiones cobradas por terminales de pago"
-          delay={0.2}
+          delay={0.3}
         />
         <StatCard 
           title="Ganancia Bruta" 
           value={`$${formatCurrency(totalGrossProfit)}`} 
           icon={<Target size={24} />} 
           tooltip="Ventas - Inversión - Comisiones"
-          delay={0.3}
+          delay={0.4}
         />
         <StatCard 
           title="Gastos Fijos" 
           value={`-$${formatCurrency(fixedExpenses)}`} 
           icon={<FileText size={24} />} 
           tooltip="Gastos fijos mensuales aproximados"
-          delay={0.4}
+          delay={0.5}
         />
         <StatCard 
           title="Ganancia Neta" 
@@ -272,7 +279,7 @@ export default function Dashboard() {
           icon={<Landmark size={24} />} 
           trend={profitTrend}
           tooltip="Ganancia real después de restar inversión, comisiones y gastos fijos"
-          delay={0.5}
+          delay={0.6}
         />
       </div>
 
