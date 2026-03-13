@@ -30,9 +30,11 @@ export default function History() {
           totalInvestment: 0,
           totalCommission: 0,
           grossProfit: 0,
+          netProfit: 0,
           unitsSold: 0,
           cashSales: 0,
-          cardSales: 0
+          cardSales: 0,
+          fixedExpenses: 549 // Gastos fijos por mes
         };
       }
       
@@ -45,11 +47,16 @@ export default function History() {
     });
 
     return Object.values(months)
-      .map(month => ({
-        ...month,
-        // Ganancia Bruta = Venta Total - Inversión Total - Comisión Total
-        grossProfit: month.totalSales - month.totalInvestment - month.totalCommission
-      }))
+      .map(month => {
+        const grossProfit = month.totalSales - month.totalInvestment - month.totalCommission;
+        return {
+          ...month,
+          // Ganancia Bruta = Venta Total - Inversión Total - Comisión Total
+          grossProfit,
+          // Ganancia Neta = Ganancia Bruta - Gastos Fijos
+          netProfit: grossProfit - month.fixedExpenses
+        };
+      })
       .sort((a, b) => a.monthKey.localeCompare(b.monthKey));
   }, [sales]);
 
@@ -80,7 +87,7 @@ export default function History() {
                     />
                     <Legend wrapperStyle={{ color: '#f5f5dc', fontSize: '12px' }}/>
                     <Line type="monotone" dataKey="totalSales" name="Ventas Totales" stroke="#d4af37" strokeWidth={3} activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="grossProfit" name="Ganancia Bruta" stroke="#805033" strokeWidth={3} />
+                    <Line type="monotone" dataKey="netProfit" name="Ganancia Neta" stroke="#8b5a2b" strokeWidth={3} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -118,6 +125,7 @@ export default function History() {
                     <th className="pb-3 px-4 font-medium text-right">Unidades Vendidas</th>
                     <th className="pb-3 px-4 font-medium text-right">Venta Total</th>
                     <th className="pb-3 px-4 font-medium text-right text-gold-400">Ganancia Bruta</th>
+                    <th className="pb-3 px-4 font-medium text-right text-green-400">Ganancia Neta</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -127,6 +135,7 @@ export default function History() {
                       <td className="py-4 px-4 text-right text-beige-200">{month.unitsSold}</td>
                       <td className="py-4 px-4 text-right font-medium text-beige-50">${formatCurrency(month.totalSales)}</td>
                       <td className="py-4 px-4 text-right font-bold text-gold-400">${formatCurrency(month.grossProfit)}</td>
+                      <td className="py-4 px-4 text-right font-bold text-green-400">${formatCurrency(month.netProfit)}</td>
                     </tr>
                   ))}
                 </tbody>
