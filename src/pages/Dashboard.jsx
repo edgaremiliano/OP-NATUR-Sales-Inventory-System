@@ -246,18 +246,25 @@ export default function Dashboard() {
           delay={0.1}
         />
         <StatCard 
+          title="Comisiones" 
+          value={`-$${formatCurrency(totalCommission)}`} 
+          icon={<CreditCard size={24} />} 
+          tooltip="Comisiones cobradas por terminales de pago"
+          delay={0.2}
+        />
+        <StatCard 
           title="Ganancia Bruta" 
           value={`$${formatCurrency(totalGrossProfit)}`} 
           icon={<Target size={24} />} 
           tooltip="Ventas - Inversión - Comisiones"
-          delay={0.2}
+          delay={0.3}
         />
         <StatCard 
           title="Gastos Fijos" 
           value={`-$${formatCurrency(fixedExpenses)}`} 
           icon={<FileText size={24} />} 
           tooltip="Gastos fijos mensuales aproximados"
-          delay={0.3}
+          delay={0.4}
         />
         <StatCard 
           title="Ganancia Neta" 
@@ -265,7 +272,7 @@ export default function Dashboard() {
           icon={<Landmark size={24} />} 
           trend={profitTrend}
           tooltip="Ganancia real después de restar inversión, comisiones y gastos fijos"
-          delay={0.4}
+          delay={0.5}
         />
       </div>
 
