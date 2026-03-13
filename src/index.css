@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    body {
+        @apply bg-chocolate-900 text-beige-50 font-sans antialiased min-h-screen relative overflow-x-hidden;
+    }
+}
+
+@layer components {
+    /* Minimalist Premium Card */
+    .card {
+        @apply bg-chocolate-800 border border-chocolate-600 rounded-2xl shadow-lg backdrop-blur-sm;
+    }
+    /* Inputs */
+    .input-premium {
+        @apply bg-chocolate-900 border border-chocolate-600 rounded-lg px-4 py-2 text-beige-50 focus: outline-none focus: ring-2 focus: ring-gold-400 focus: border-transparent transition-all;
+    }
+    /* Buttons */
+    .btn-primary {
+        @apply bg-gold-400 text-chocolate-900 font-semibold px-4 py-2 rounded-lg hover: bg-gold-300 transition-all active: scale-95 flex items-center justify-center gap-2;
+    }
+    .btn-secondary {
+        @apply bg-chocolate-700 text-beige-50 border border-chocolate-500 font-medium px-4 py-2 rounded-lg hover: bg-chocolate-600 transition-all active: scale-95 flex items-center justify-center gap-2;
+    }
+}
+
+
+/* Custom Scrollbar for elegant look */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e120b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3b2417;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5c3924;
+}
