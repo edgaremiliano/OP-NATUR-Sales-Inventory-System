@@ -69,7 +69,8 @@ export default function Dashboard() {
 
   const isMonthClosed = closedMonths.includes(selectedMonth);
 
-  const formattedMonth = new Date(selectedMonth + '-01').toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  const [yearStr, monthStr] = selectedMonth.split('-');
+  const formattedMonth = new Date(parseInt(yearStr), parseInt(monthStr) - 1, 1).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
 
   const totalSales = filteredSales.reduce((acc, sale) => acc + (sale.saleTotal || 0), 0);
   const totalInvestment = filteredSales.reduce((acc, sale) => acc + (sale.investment || 0), 0);
