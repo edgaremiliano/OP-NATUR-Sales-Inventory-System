@@ -10,11 +10,12 @@ export default function Inventory() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showDuplicatesInfo, setShowDuplicatesInfo] = useState(false);
 
-  const filteredProducts = products.filter(p => 
-    p.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProducts = products.filter(p => {
+    const name = p?.name || '';
+    return name.toLowerCase().includes((searchTerm || '').toLowerCase());
+  });
 
-  const lowStockProducts = products.filter(p => typeof p.stock === 'number' && p.stock < 5);
+  const lowStockProducts = products.filter(p => typeof p?.stock === 'number' && p.stock < 5);
 
   // Algoritmo simple para encontrar duplicados por nombre exacto
   const findDuplicates = () => {
@@ -22,7 +23,10 @@ export default function Inventory() {
     const duplicates = [];
 
     products.forEach(p => {
-      const normalizedName = p.name.trim().toLowerCase();
+      const name = p?.name || '';
+      const normalizedName = name.trim().toLowerCase();
+      if (!normalizedName) return; // Saltarse productos sin nombre
+      
       if (!nameMap[normalizedName]) {
         nameMap[normalizedName] = [p];
       } else {
