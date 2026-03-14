@@ -14,14 +14,30 @@
     }
     /* Inputs */
     .input-premium {
-        @apply bg-chocolate-900 border border-chocolate-600 rounded-lg px-4 py-2 text-beige-50 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent transition-all;
+        @apply bg-chocolate-900 border border-chocolate-600 rounded-lg px-4 py-2 text-beige-50 transition-all;
+    }
+    .input-premium:focus {
+        @apply outline-none ring-2 ring-gold-400 border-transparent;
     }
     /* Buttons */
     .btn-primary {
-        @apply bg-gold-400 text-chocolate-900 font-semibold px-4 py-2 rounded-lg hover:bg-gold-300 transition-all active:scale-95 flex items-center justify-center gap-2;
+        @apply bg-gold-400 text-chocolate-900 font-semibold px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2;
     }
+    .btn-primary:hover {
+        @apply bg-gold-300;
+    }
+    .btn-primary:active {
+        @apply scale-95;
+    }
+
     .btn-secondary {
-        @apply bg-chocolate-700 text-beige-50 border border-chocolate-500 font-medium px-4 py-2 rounded-lg hover:bg-chocolate-600 transition-all active:scale-95 flex items-center justify-center gap-2;
+        @apply bg-chocolate-700 text-beige-50 border border-chocolate-500 font-medium px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2;
+    }
+    .btn-secondary:hover {
+        @apply bg-chocolate-600;
+    }
+    .btn-secondary:active {
+        @apply scale-95;
     }
 }
 
