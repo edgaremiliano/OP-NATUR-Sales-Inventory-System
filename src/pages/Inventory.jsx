@@ -165,26 +165,34 @@ export default function Inventory() {
               </tr>
             </thead>
             <tbody>
-              {filteredProducts.map((p) => (
-                <tr key={p.id} className="border-b border-chocolate-700/50 hover:bg-chocolate-800/50 transition-colors">
-                  <td className="py-4 px-4 text-xs font-mono text-chocolate-400">{p.id.startsWith('PRD-') ? p.id : <span title={p.id}>P-Gen</span>}</td>
-                  <td className="py-4 px-4 font-medium text-beige-100">{p.name}</td>
-                  <td className="py-4 px-4 text-chocolate-300">
-                    <span className="bg-chocolate-900 px-3 py-1 rounded-full text-xs border border-chocolate-600">
-                      {p.category}
-                    </span>
-                  </td>
-                  <td className="py-4 px-4 text-right text-red-200/80">${p.cost.toFixed(2)}</td>
-                  <td className="py-4 px-4 text-right text-gold-400">${p.price.toFixed(2)}</td>
-                  <td className="py-4 px-4 text-right font-medium text-beige-200 flex items-center justify-end gap-2">
-                    {getStockIndicator(p.stock)}
-                    <span>{p.stock !== undefined ? p.stock : '-'}</span>
-                  </td>
-                  <td className="py-4 px-4 text-right text-green-400">
-                    {p.cost > 0 ? (((p.price - p.cost) / p.cost) * 100).toFixed(0) : 100}%
-                  </td>
-                </tr>
-              ))}
+              {filteredProducts.map((p) => {
+                const cost = Number(p.cost) || 0;
+                const price = Number(p.price) || 0;
+                const margin = cost > 0 ? (((price - cost) / cost) * 100).toFixed(0) : 100;
+                
+                return (
+                  <tr key={p.id} className="border-b border-chocolate-700/50 hover:bg-chocolate-800/50 transition-colors">
+                    <td className="py-4 px-4 text-xs font-mono text-chocolate-400">
+                      {p.id && String(p.id).startsWith('PRD-') ? p.id : <span title={p.id}>P-Gen</span>}
+                    </td>
+                    <td className="py-4 px-4 font-medium text-beige-100">{p.name || 'Sin nombre'}</td>
+                    <td className="py-4 px-4 text-chocolate-300">
+                      <span className="bg-chocolate-900 px-3 py-1 rounded-full text-xs border border-chocolate-600">
+                        {p.category || 'General'}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-right text-red-200/80">${cost.toFixed(2)}</td>
+                    <td className="py-4 px-4 text-right text-gold-400">${price.toFixed(2)}</td>
+                    <td className="py-4 px-4 text-right font-medium text-beige-200 flex items-center justify-end gap-2">
+                      {getStockIndicator(p.stock)}
+                      <span>{p.stock !== undefined ? p.stock : '-'}</span>
+                    </td>
+                    <td className="py-4 px-4 text-right text-green-400">
+                      {margin}%
+                    </td>
+                  </tr>
+                );
+              })}
               {filteredProducts.length === 0 && (
                 <tr>
                   <td colSpan="7" className="py-8 text-center text-chocolate-400 text-sm">
