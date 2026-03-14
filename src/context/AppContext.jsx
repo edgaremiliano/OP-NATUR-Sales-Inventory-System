@@ -27,9 +27,30 @@ export const AppProvider = ({ children }) => {
   });
   
   const getSalesFromStorage = () => {
-    const saved = localStorage.getItem('sales');
+    let saved = localStorage.getItem('sales');
     if (saved) {
-      const parsed = JSON.parse(saved);
+      let parsed = JSON.parse(saved);
+      
+      // MIGRACIÓN: Como el navegador guarda los datos localmente, necesitamos forzar 
+      // la actualización de las fechas aleatorias para que la gráfica se vea bien,
+      // sin borrar las ventas que hayas agregado manualmente.
+      let needsUpdate = false;
+      const initialData = getInitialSales([]);
+      parsed = parsed.map(sale => {
+        if (typeof sale.id === 'string' && sale.id.startsWith('feb2026-')) {
+          const match = initialData.find(i => i.id === sale.id);
+          if (match && sale.date !== match.date) {
+            needsUpdate = true;
+            return { ...sale, date: match.date };
+          }
+        }
+        return sale;
+      });
+
+      if (needsUpdate) {
+        localStorage.setItem('sales', JSON.stringify(parsed));
+      }
+
       if (parsed.length > 0) return parsed;
     }
     // Fallback: Si no hay ventas, cargar las iniciales, inyectándoles todos los productos unidos

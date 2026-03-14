@@ -29,7 +29,6 @@
     .btn-primary:active {
         @apply scale-95;
     }
-
     .btn-secondary {
         @apply bg-chocolate-700 text-beige-50 border border-chocolate-500 font-medium px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2;
     }
